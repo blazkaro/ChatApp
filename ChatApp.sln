@@ -1,0 +1,41 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35818.85 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Spa", "Spa", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Messages", "Messages", "{F51E2669-0971-4D36-97DA-0C591D5FE93E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Conversations", "Conversations", "{855118CF-434D-452D-A7CF-57748038E297}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RealTimeCommunication", "RealTimeCommunication", "{D58ADA49-14B8-4649-B3E8-044990D4BE22}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{1AB9CBB4-E089-4D47-9224-9106E2AD3CDA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "APIGateway", "APIGateway", "{0065E536-FB6A-4F26-9B3F-00C3E131CCCE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatApp.RealTimeCommunication.API", "RealTimeCommunication\src\ChatApp.RealTimeCommunication.API\ChatApp.RealTimeCommunication.API.csproj", "{54BCD3E2-354F-4AC2-AED5-85E0798DC7E2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{54BCD3E2-354F-4AC2-AED5-85E0798DC7E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54BCD3E2-354F-4AC2-AED5-85E0798DC7E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54BCD3E2-354F-4AC2-AED5-85E0798DC7E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54BCD3E2-354F-4AC2-AED5-85E0798DC7E2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1AB9CBB4-E089-4D47-9224-9106E2AD3CDA} = {D58ADA49-14B8-4649-B3E8-044990D4BE22}
+		{54BCD3E2-354F-4AC2-AED5-85E0798DC7E2} = {1AB9CBB4-E089-4D47-9224-9106E2AD3CDA}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B87D6FCE-3C18-46DA-805A-6B3FF6263FD9}
+	EndGlobalSection
+EndGlobal
