@@ -1,6 +1,7 @@
 ﻿using ChatApp.RealTimeCommunication.Services;
 using ChatApp.RealTimeCommunication.Services.Impl.Rest;
 using Polly;
+using System.Net;
 
 namespace ChatApp.RealTimeCommunication.Configuration;
 
@@ -19,13 +20,19 @@ public static class ServicesConfigurator
             .Handle<HttpRequestException>()
             .CircuitBreakerAsync(apiConfig.CommunicationPolicy.AllowedExceptionsCountBeforeBreak, apiConfig.CommunicationPolicy.BreakDuration);
 
+        // Propagate unauthorized down to microservices
+        var unauthorizedPolicy = Policy<HttpResponseMessage>
+            .HandleResult(p => p.StatusCode == HttpStatusCode.Unauthorized)
+            .FallbackAsync(new HttpResponseMessage(HttpStatusCode.Unauthorized));
+
         services.AddHttpClient<IConversationsService, RestConversationsService>(cfg =>
         {
             cfg.BaseAddress = apiConfig.ConversationsApi.BaseUrl;
         })
             .AddPolicyHandler(retryPolicy)
             .AddPolicyHandler(timeoutPolicy)
-            .AddPolicyHandler(circuitBreakerPolicy);
+            .AddPolicyHandler(circuitBreakerPolicy)
+            .AddPolicyHandler(unauthorizedPolicy);
 
         return services;
     }

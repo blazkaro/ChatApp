@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Conversations\src\ChatApp.Conversations\ChatApp.Conversations.csproj" />
     <ProjectReference Include="..\RealTimeCommunication\src\ChatApp.RealTimeCommunication.API\ChatApp.RealTimeCommunication.csproj" />
   </ItemGroup>
 
