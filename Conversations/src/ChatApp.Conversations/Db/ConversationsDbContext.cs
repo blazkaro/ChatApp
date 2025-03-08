@@ -1,7 +1,7 @@
 ﻿using ChatApp.Conversations.Db.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace ChatApp.Conversations.DbContexts;
+namespace ChatApp.Conversations.Db;
 
 public class ConversationsDbContext : DbContext
 {
@@ -10,6 +10,7 @@ public class ConversationsDbContext : DbContext
     }
 
     public DbSet<Conversation> Conversations { get; set; }
+    public DbSet<ConversationInvitation> ConversationInvitations { get; set; }
 
     protected ConversationsDbContext()
     {
@@ -22,5 +23,14 @@ public class ConversationsDbContext : DbContext
 
         modelBuilder.Entity<ConversationMember>()
             .HasKey(p => new { p.UserId, p.ConversationId });
+
+        modelBuilder.Entity<ConversationInvitation>()
+            .HasKey(p => p.Id);
+
+        modelBuilder.Entity<ConversationInvitation>()
+            .HasIndex(p => p.InvitedUserId);
+
+        modelBuilder.Entity<ConversationInvitation>()
+            .HasIndex(p => p.ConversationId);
     }
 }

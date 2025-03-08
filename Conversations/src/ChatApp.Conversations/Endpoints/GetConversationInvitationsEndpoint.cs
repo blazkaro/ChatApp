@@ -6,14 +6,15 @@ using System.Security.Claims;
 
 namespace ChatApp.Conversations.Endpoints;
 
-public static class GetConversationsEndpoint
+public static class GetConversationInvitationsEndpoint
 {
     public static async Task<IResult> GetAsync(ClaimsPrincipal user, ConversationsDbContext dbContext, CancellationToken cancellationToken)
     {
         return Results.Ok(
-            await dbContext.Conversations.AsNoTracking()
-                .Where(p => p.Members.Any(p => p.UserId == user.GetUserId()))
-                .Select(p => new GetConversationDto(p.Id, p.Name)).ToListAsync(cancellationToken)
+            await dbContext.ConversationInvitations.AsNoTracking()
+                .Where(invitation => invitation.InvitedUserId == user.GetUserId())
+                .Select(invitation => new GetConversationInvitationDto(invitation.ConversationId, invitation.Id))
+                .ToListAsync(cancellationToken)
             );
     }
 }

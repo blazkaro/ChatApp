@@ -1,9 +1,9 @@
 ﻿namespace ChatApp.Conversations.Db.Entities;
 
-public class ConversationMember
+public class ConversationInvitation
 {
-    public string UserId { get; set; }
+    public Guid Id { get; set; }
     public Guid ConversationId { get; set; }
     public Conversation Conversation { get; set; }
-    public bool IsAdmin { get; set; }
+    public string InvitedUserId { get; set; }
 }
