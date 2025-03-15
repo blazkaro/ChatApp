@@ -36,7 +36,7 @@ public class CommunicationHub : Hub
 
         var callerId = Context.UserIdentifier!;
         var receiveMessageDto = new ReceiveMessageDto(dto.Content, callerId, dto.ConversationId, DateTime.UtcNow);
-
+        
         await Clients.Groups(dto.ConversationId).SendAsync(CommunicationHubMethods.ReceiveMessageAsync,
             receiveMessageDto,
             cancellationToken: Context.ConnectionAborted);

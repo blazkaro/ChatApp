@@ -23,6 +23,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{82A5EC18-01B
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatApp.Conversations", "Conversations\src\ChatApp.Conversations\ChatApp.Conversations.csproj", "{B9FBF7C2-3444-151C-FFDF-E81159AF3F2A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{15520CAC-45F9-42DC-87F5-1BFD8767E942}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatApp.Messages", "Messages\src\ChatApp.Messages\ChatApp.Messages.csproj", "{BE3A3690-EC9E-B53D-588D-C7CFBC2868B4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +45,10 @@ Global
 		{B9FBF7C2-3444-151C-FFDF-E81159AF3F2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B9FBF7C2-3444-151C-FFDF-E81159AF3F2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B9FBF7C2-3444-151C-FFDF-E81159AF3F2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE3A3690-EC9E-B53D-588D-C7CFBC2868B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE3A3690-EC9E-B53D-588D-C7CFBC2868B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE3A3690-EC9E-B53D-588D-C7CFBC2868B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE3A3690-EC9E-B53D-588D-C7CFBC2868B4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -50,6 +58,8 @@ Global
 		{54BCD3E2-354F-4AC2-AED5-85E0798DC7E2} = {1AB9CBB4-E089-4D47-9224-9106E2AD3CDA}
 		{82A5EC18-01B6-457A-9574-BAFFC727C924} = {855118CF-434D-452D-A7CF-57748038E297}
 		{B9FBF7C2-3444-151C-FFDF-E81159AF3F2A} = {82A5EC18-01B6-457A-9574-BAFFC727C924}
+		{15520CAC-45F9-42DC-87F5-1BFD8767E942} = {F51E2669-0971-4D36-97DA-0C591D5FE93E}
+		{BE3A3690-EC9E-B53D-588D-C7CFBC2868B4} = {15520CAC-45F9-42DC-87F5-1BFD8767E942}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B87D6FCE-3C18-46DA-805A-6B3FF6263FD9}

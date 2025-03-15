@@ -4,4 +4,6 @@ builder.AddProject<Projects.ChatApp_RealTimeCommunication>("chatapp-realtimecomm
 
 builder.AddProject<Projects.ChatApp_Conversations>("chatapp-conversations");
 
+builder.AddProject<Projects.ChatApp_Messages>("chatapp-messages");
+
 builder.Build().Run();
