@@ -1,4 +1,4 @@
-﻿using ChatApp.Messages.Dtos;
+﻿using ChatApp.Messages.Controllers.Dtos;
 using ChatApp.Messages.Entities;
 using System.Collections.Concurrent;
 

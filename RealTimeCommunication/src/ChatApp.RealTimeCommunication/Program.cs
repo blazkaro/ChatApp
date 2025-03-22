@@ -1,27 +1,24 @@
-using ChatApp.Messages.Configuration;
-using ChatApp.Messages.Db;
-using ChatApp.Messages.Repositories;
-using ChatApp.Messages.Services;
-using ChatApp.Messages.Services.Background;
-using ChatApp.Messages.Services.Impl;
+using ChatApp.RealTimeCommunication;
+using ChatApp.RealTimeCommunication.Configuration;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using StackExchange.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var redisConfigSection = builder.Configuration.GetRequiredSection("Redis");
 var auth0ConfigSection = builder.Configuration.GetRequiredSection("Auth0");
 
-builder.Services.AddNpgsqlDataSource(builder.Configuration.GetConnectionString("YugabyteDB"));
-builder.Services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect(builder.Configuration.GetConnectionString("Redis")));
+builder.Services.AddSignalR()
+    .AddStackExchangeRedis(builder.Configuration.GetConnectionString("Redis"), cfg =>
+    {
+        cfg.Configuration.ClientName = redisConfigSection.GetValue<string>("ClientName");
+        cfg.Configuration.ChannelPrefix = RedisChannel.Literal(redisConfigSection.GetValue<string>("ChannelPrefix"));
+    });
 
 var apiConfig = new ApiConfig();
 builder.Configuration.GetRequiredSection(nameof(ApiConfig)).Bind(apiConfig);
 
-builder.Services.AddHttpContextAccessor();
 builder.Services.ConfigureRestServices(apiConfig);
-builder.Services.AddScoped<IAccessTokenService, AccessTokenService>();
-builder.Services.AddSingleton<IMessageRepository, MessageRepository>();
-builder.Services.AddHostedService<SaveMessagesBackgroundService>();
 
 builder.Services.AddAuthentication(cfg =>
 {
@@ -36,18 +33,12 @@ builder.Services.AddAuthentication(cfg =>
     });
 
 builder.Services.AddAuthorization();
-builder.Services.AddControllers();
 
 var app = builder.Build();
 
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllers();
-
-if (builder.Environment.IsDevelopment())
-{
-    await app.MigrateDbIfNotExists();
-}
+app.MapHub<CommunicationHub>("");
 
 app.Run();

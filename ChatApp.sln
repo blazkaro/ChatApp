@@ -15,7 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{1AB9CBB4-E08
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "APIGateway", "APIGateway", "{0065E536-FB6A-4F26-9B3F-00C3E131CCCE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatApp.RealTimeCommunication", "RealTimeCommunication\src\ChatApp.RealTimeCommunication.API\ChatApp.RealTimeCommunication.csproj", "{54BCD3E2-354F-4AC2-AED5-85E0798DC7E2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatApp.RealTimeCommunication", "RealTimeCommunication\src\ChatApp.RealTimeCommunication\ChatApp.RealTimeCommunication.csproj", "{54BCD3E2-354F-4AC2-AED5-85E0798DC7E2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatApp.AppHost", "ChatApp.AppHost\ChatApp.AppHost.csproj", "{7C13B626-9FC2-4A74-A378-0BA0B016CD7A}"
 EndProject

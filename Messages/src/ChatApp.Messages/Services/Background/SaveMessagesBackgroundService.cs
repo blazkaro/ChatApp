@@ -1,4 +1,4 @@
-﻿using ChatApp.Messages.Dtos;
+﻿using ChatApp.Messages.Controllers.Dtos;
 using ChatApp.Messages.Repositories;
 using StackExchange.Redis;
 using System.Collections.Concurrent;
@@ -12,7 +12,7 @@ public class SaveMessagesBackgroundService : BackgroundService
 {
     private readonly TimeSpan MESSAGES_SAVE_RATE = TimeSpan.FromMilliseconds(1000);
     private readonly JsonSerializerOptions _messageSerializerOptions = new() { PropertyNameCaseInsensitive = true };
-    private readonly ConcurrentQueue<MessageDtoRedis> MessagesToSave;
+    private readonly ConcurrentQueue<MessageDtoRedis> MessagesToSave = new();
 
     private readonly ISubscriber _redisSub;
     private readonly IMessageRepository _messageRepository;
