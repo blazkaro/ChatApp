@@ -2,6 +2,7 @@ using ChatApp.Conversations.Db;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +24,7 @@ builder.Services.AddAuthentication(cfg =>
     {
         cfg.Authority = auth0ConfigSection.GetValue<string>("Authority");
         cfg.Audience = auth0ConfigSection.GetValue<string>("Audience");
+        cfg.TokenValidationParameters.NameClaimType = ClaimTypes.NameIdentifier;
     });
 
 builder.Services.AddAuthorization();

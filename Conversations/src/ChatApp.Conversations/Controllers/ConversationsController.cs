@@ -53,4 +53,13 @@ public class ConversationsController : ControllerBase
 
         return Created(conversation.Id.ToString(), new ConversationCreatedDto(conversation.Id));
     }
+
+    [HttpGet("membership/{conversationId}")]
+    public async Task<bool> VerifyMembership(Guid conversationId, CancellationToken cancellationToken)
+    {
+        return await _dbContext.Conversations
+            .AnyAsync(conv => conv.Id == conversationId
+                && conv.Members.Any(member => member.UserId == User.GetUserId()),
+            cancellationToken);
+    }
 }

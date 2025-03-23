@@ -53,6 +53,6 @@ app.UseHttpsRedirection();
 
 app.MapFallbackToFile("/index.html");
 
-app.MapReverseProxy();
+app.MapReverseProxy().RequireAuthorization(cfg => cfg.RequireAuthenticatedUser());
 
 app.Run();

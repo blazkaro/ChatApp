@@ -2,6 +2,8 @@ using ChatApp.RealTimeCommunication;
 using ChatApp.RealTimeCommunication.Configuration;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using StackExchange.Redis;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +16,8 @@ builder.Services.AddSignalR()
         cfg.Configuration.ClientName = redisConfigSection.GetValue<string>("ClientName");
         cfg.Configuration.ChannelPrefix = RedisChannel.Literal(redisConfigSection.GetValue<string>("ChannelPrefix"));
     });
+
+builder.Services.Configure<ApiConfig>(builder.Configuration.GetRequiredSection(nameof(ApiConfig)));
 
 var apiConfig = new ApiConfig();
 builder.Configuration.GetRequiredSection(nameof(ApiConfig)).Bind(apiConfig);
@@ -30,6 +34,7 @@ builder.Services.AddAuthentication(cfg =>
     {
         cfg.Authority = auth0ConfigSection.GetValue<string>("Authority");
         cfg.Audience = auth0ConfigSection.GetValue<string>("Audience");
+        cfg.TokenValidationParameters.NameClaimType = ClaimTypes.NameIdentifier;
     });
 
 builder.Services.AddAuthorization();

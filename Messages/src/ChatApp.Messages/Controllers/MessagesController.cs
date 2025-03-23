@@ -29,10 +29,7 @@ public class MessagesController : ControllerBase
     [HttpGet("{conversationId}")]
     public async Task<IActionResult> GetAsync(Guid conversationId, [FromQuery] GetMessagesReqDto dto, CancellationToken cancellationToken)
     {
-        var at = await _atService.GetCurrentAccessTokenAsync(cancellationToken);
-        if (string.IsNullOrEmpty(at))
-            return Unauthorized();
-
+        var at = (await _atService.GetCurrentAccessTokenAsync(cancellationToken))!; // not null because JWT auth is required
         var authorized = await _conversationAccessCheckService.HasAccesAsync(conversationId, at, cancellationToken);
         if (!authorized)
             return Forbid();
