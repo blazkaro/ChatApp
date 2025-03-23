@@ -38,12 +38,15 @@ builder.Services.AddAuthentication(cfg =>
 builder.Services.AddAuthorization();
 builder.Services.AddControllers();
 
+builder.Services.AddHealthChecks();
+
 var app = builder.Build();
 
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHealthChecks("/health");
 
 if (builder.Environment.IsDevelopment())
 {

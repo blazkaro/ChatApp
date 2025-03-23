@@ -33,6 +33,7 @@ builder.Services.AddAuthentication(cfg =>
     });
 
 builder.Services.AddAuthorization();
+builder.Services.AddHealthChecks();
 
 var app = builder.Build();
 
@@ -40,5 +41,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapHub<CommunicationHub>("");
+app.MapHealthChecks("/health");
 
 app.Run();
