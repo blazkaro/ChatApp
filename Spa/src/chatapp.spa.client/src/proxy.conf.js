@@ -5,7 +5,7 @@ const target = env["services__chatapp.spa-server__https__0"] ?? 'https://localho
 const PROXY_CONFIG = [
   {
     context: [
-      "/weatherforecast",
+      "/api",
     ],
     target,
     secure: false

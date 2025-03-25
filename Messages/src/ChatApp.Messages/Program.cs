@@ -6,7 +6,6 @@ using ChatApp.Messages.Services.Background;
 using ChatApp.Messages.Services.Impl;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using StackExchange.Redis;
-using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);

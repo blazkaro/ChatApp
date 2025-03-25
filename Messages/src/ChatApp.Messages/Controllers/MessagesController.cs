@@ -36,7 +36,7 @@ public class MessagesController : ControllerBase
 
         return Ok(
             (await _messageRepository.GetLastMessagesUpToDateAsync(conversationId, dto.UpTo, cancellationToken))
-                .Select(msg => new GetMessageResDto(msg.Id, msg.Content, msg.SenderId, msg.ConversationId, msg.SentAt))
+                .Select(msg => new GetMessageResDto(msg.Id, msg.Content, msg.SenderId, msg.SentAt))
             );
     }
 }

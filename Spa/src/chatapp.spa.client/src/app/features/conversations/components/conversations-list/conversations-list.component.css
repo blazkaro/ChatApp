@@ -1,0 +1,9 @@
+#container {
+  display: flex;
+  flex-direction: column;
+}
+
+.conv-card:hover {
+  cursor: pointer;
+  filter: opacity(0.7);
+}

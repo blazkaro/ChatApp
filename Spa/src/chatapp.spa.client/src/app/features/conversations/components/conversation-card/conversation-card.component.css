@@ -1,0 +1,36 @@
+mat-card {
+  font-size: 1em;
+}
+
+mat-card-title {
+  color: #fff;
+  word-break: break-all;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  -moz-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-clamp: 1;
+  font-size: 1em;
+  font-weight: 700;
+}
+
+mat-card-subtitle {
+  color: #9b9b9b;
+  font-size: 1em;
+  margin-top: 10px;
+}
+
+#avatar {
+  height: 50px;
+  width: 50px;
+}
+
+#status {
+  background-color: #34ff00;
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}

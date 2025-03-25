@@ -7,4 +7,10 @@
     <!-- Folder where production build objects will be placed -->
     <BuildOutputFolder>$(MSBuildProjectDirectory)\dist\chatapp.spa.client\browser\</BuildOutputFolder>
   </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="src\app\core\services\" />
+    <Folder Include="src\app\features\chat\components\" />
+    <Folder Include="src\app\features\conversations\components\" />
+    <Folder Include="src\app\features\conversations\services\" />
+  </ItemGroup>
 </Project>
