@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Conversation } from '../../../models/conversation';
 
 @Component({
   selector: 'app-chat-bar',
@@ -7,5 +8,5 @@ import { Component } from '@angular/core';
   styleUrl: './chat-bar.component.css'
 })
 export class ChatBarComponent {
-
+  @Input() conv: Conversation = undefined!;
 }

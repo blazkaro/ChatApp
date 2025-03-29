@@ -1,0 +1,5 @@
+<div id="container">
+    @for(conv of getConversations() | async | keyvalue; track conv.value.id){
+    <app-conversation-card [conv]=conv.value class="conv-card" (click)="openChat(conv.value)"></app-conversation-card>
+    }
+</div>

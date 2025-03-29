@@ -1,0 +1,38 @@
+#container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  border-radius: 12px;
+}
+
+
+#header {
+  display: block;
+  flex: 0 1 auto;
+  border-radius: 12px 12px 0 0;
+}
+
+#messages {
+  display: block;
+  flex: 1 1;
+}
+
+#bar {
+  display: block;
+  flex: 0 0 auto;
+  margin-top: auto;
+  border-radius: 0 0 12px 12px;
+}
+
+#welcome-layout-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#welcome-layout-logo{
+    width: 70%;
+}

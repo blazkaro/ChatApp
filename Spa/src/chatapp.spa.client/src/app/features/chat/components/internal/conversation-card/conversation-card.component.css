@@ -1,5 +1,6 @@
 mat-card {
   font-size: 1em;
+  background-color: #151215;
 }
 
 mat-card-title {
@@ -18,19 +19,13 @@ mat-card-title {
 
 mat-card-subtitle {
   color: #9b9b9b;
-  font-size: 1em;
-  margin-top: 10px;
-}
-
-#avatar {
-  height: 50px;
-  width: 50px;
+  font-size: .9em;
 }
 
 #status {
   background-color: #34ff00;
   display: inline-block;
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
 }

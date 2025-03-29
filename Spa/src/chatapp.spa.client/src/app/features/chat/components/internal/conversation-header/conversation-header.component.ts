@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Conversation } from '../../../models/conversation';
 
 @Component({
   selector: 'app-conversation-header',
@@ -7,5 +8,5 @@ import { Component } from '@angular/core';
   styleUrl: './conversation-header.component.css'
 })
 export class ConversationHeaderComponent {
-
+  @Input() conv: Conversation = undefined!;
 }

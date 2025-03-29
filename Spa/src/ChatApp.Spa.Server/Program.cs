@@ -13,7 +13,7 @@ builder.Services.AddAuth0WebAppAuthentication(Auth0Constants.AuthenticationSchem
     cfg.Domain = auth0ConfigSection["Domain"];
     cfg.ClientId = auth0ConfigSection["ClientId"];
     cfg.ClientSecret = auth0ConfigSection["ClientSecret"];
-    
+
     cfg.Scope = "openid profile offline_access";
     cfg.ResponseType = OpenIdConnectResponseType.Code;
 }).WithAccessToken(cfg =>
@@ -52,9 +52,7 @@ app.MapStaticAssets();
 app.UseHttpsRedirection();
 
 app.MapFallbackToFile("/index.html");
-
-app.MapGet("/", () => Results.Ok())
-    .RequireAuthorization();
+    //.RequireAuthorization();
 
 app.MapReverseProxy();
 

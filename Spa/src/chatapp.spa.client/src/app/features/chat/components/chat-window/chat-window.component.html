@@ -1,0 +1,13 @@
+<div id="container">
+    <ng-container *ngIf="activeConv != undefined; else welcomeTemplate">
+        <app-conversation-header [conv]=activeConv id="header"></app-conversation-header>
+        <app-conversation-messages id="messages"></app-conversation-messages>
+        <app-chat-bar id="bar"></app-chat-bar>
+    </ng-container>
+</div>
+
+<ng-template #welcomeTemplate>
+    <div id="welcome-layout-container">
+        <img id="welcome-layout-logo" src="logo.svg" alt="logo" />
+    </div>
+</ng-template>

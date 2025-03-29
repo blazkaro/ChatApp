@@ -1,0 +1,20 @@
+mat-card {
+  border-radius: inherit;
+  display: flex;
+  align-items: center;
+  background-color: #151215;
+}
+
+mat-card-title {
+  color: #fff;
+  word-break: break-all;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  -moz-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-clamp: 1;
+  font-size: 1.25em;
+  font-weight: 700;
+}
