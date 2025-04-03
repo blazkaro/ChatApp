@@ -10,4 +10,5 @@ public class ConcurrentHashSet<TKey>
     public bool TryAdd(TKey key) => _concurrentDictionary.TryAdd(key, 0);
     public bool TryRemove(TKey key) => _concurrentDictionary.TryRemove(key, out _);
     public bool ContainsKey(TKey key) => _concurrentDictionary.ContainsKey(key);
+    public IEnumerator<KeyValuePair<TKey, byte>> GetEnumerator() => _concurrentDictionary.GetEnumerator();
 }

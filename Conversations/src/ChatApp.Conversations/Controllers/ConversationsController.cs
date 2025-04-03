@@ -3,6 +3,7 @@ using ChatApp.Conversations.Controllers.Dtos.Responses;
 using ChatApp.Conversations.Db;
 using ChatApp.Conversations.Db.Entities;
 using ChatApp.Conversations.Extensions;
+using ChatApp.Conversations.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -16,10 +17,13 @@ namespace ChatApp.Conversations.Controllers;
 public class ConversationsController : ControllerBase
 {
     private readonly ConversationsDbContext _dbContext;
+    private readonly IConversationEventsPublisher _conversationsEvents;
 
-    public ConversationsController(ConversationsDbContext dbContext)
+    public ConversationsController(ConversationsDbContext dbContext,
+        IConversationEventsPublisher conversationsEvents)
     {
         _dbContext = dbContext;
+        _conversationsEvents = conversationsEvents;
     }
 
     [HttpGet]
@@ -28,7 +32,13 @@ public class ConversationsController : ControllerBase
         return Ok(
             await _dbContext.Conversations.AsNoTracking()
                 .Where(p => p.Members.Any(p => p.UserId == User.GetUserId()))
-                .Select(p => new GetConversationDto(p.Id, p.Name)).ToListAsync(cancellationToken)
+                .Select(p =>
+                    new GetConversationDto(
+                        p.Id,
+                        p.Name,
+                        p.AvatarUrl,
+                        p.Members.Any(member => member.UserId == User.GetUserId() && member.IsAdmin)))
+                .ToListAsync(cancellationToken)
             );
     }
 
@@ -38,6 +48,7 @@ public class ConversationsController : ControllerBase
         var conversation = new Conversation
         {
             Name = dto.Name,
+            AvatarUrl = dto.AvatarUrl,
             Members =
             [
                 new ConversationMember
@@ -50,8 +61,21 @@ public class ConversationsController : ControllerBase
 
         _dbContext.Conversations.Add(conversation);
         await _dbContext.SaveChangesAsync(cancellationToken);
+        await _conversationsEvents.ConversationCreated(conversation.Id, User.GetUserId());
 
-        return Created(conversation.Id.ToString(), new ConversationCreatedDto(conversation.Id));
+        return Created(conversation.Id.ToString(), new ConversationCreatedDto(conversation.Id, conversation.Name, conversation.AvatarUrl));
+    }
+
+    [HttpGet("{conversationId}/members")]
+    public async Task<IActionResult> GetConversationMembers(Guid conversationId, CancellationToken cancellationToken)
+    {
+        if (!await VerifyMembership(conversationId, cancellationToken))
+            return Forbid();
+
+        return Ok(
+            await _dbContext.Conversations.Where(p => p.Id == conversationId)
+                .SelectMany(p => p.Members.Select(member => member.UserId))
+                .ToListAsync(cancellationToken));
     }
 
     [HttpGet("membership/{conversationId}")]

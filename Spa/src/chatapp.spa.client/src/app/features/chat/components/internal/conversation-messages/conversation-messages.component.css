@@ -1,7 +1,60 @@
 #container {
   width: 100%;
   height: 100%;
-  background: url("../../../../../../../public/logo.svg") no-repeat center;
-  background-size: 70%;
-  filter: opacity(.3);
+  position: relative;
+  box-sizing: border-box;
+  padding: 10px;
+  overflow: auto;
+}
+
+#messages-list {
+  width: 100%;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 5px;
+}
+
+.message {
+  z-index: 999;
+  color: #fff;
+  width: auto;
+  max-width: 60%;
+  padding: 5px;
+  word-break: break-word;
+}
+
+.left {
+  background-color: #4C444B;
+  align-self: flex-start;
+  border-radius: 12px 12px 12px 0;
+}
+
+.right {
+  border-radius: 12px 12px 0 12px;
+  align-self: flex-end;
+  background-color: #76157D;
+}
+
+.message-header {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 500;
+  letter-spacing: .2px;
+  font-style: italic;
+  word-break: break-all;
+}
+
+.avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.message-content {
+  font-size: 1em;
+  box-sizing: border-box;
+  padding: 2px;
 }

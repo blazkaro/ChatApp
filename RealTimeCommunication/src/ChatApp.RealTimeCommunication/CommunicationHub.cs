@@ -1,6 +1,6 @@
 ﻿using ChatApp.RealTimeCommunication.Dtos;
-using ChatApp.RealTimeCommunication.Extensions;
 using ChatApp.RealTimeCommunication.Services;
+using ChatApp.RealTimeCommunication.Stores;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
@@ -12,39 +12,51 @@ public class CommunicationHub : Hub
 {
     private readonly IConversationsService _conversationsService;
     private readonly IAccessTokenService _accessTokenService;
+    private readonly IUserConnectionsStore _userConnectionsStore;
+    private readonly IUserConversationsStore _userConversationsStore;
 
     public CommunicationHub(IConversationsService conversationsService,
-        IAccessTokenService accessTokenService)
+        IAccessTokenService accessTokenService,
+        IUserConnectionsStore userConnectionsStore,
+        IUserConversationsStore userConversationsStore)
     {
         _conversationsService = conversationsService;
         _accessTokenService = accessTokenService;
+        _userConnectionsStore = userConnectionsStore;
+        _userConversationsStore = userConversationsStore;
     }
 
     public override async Task OnConnectedAsync()
     {
         // These are never null because user is authenticated
-        var callerId = Context.UserIdentifier!;
+        var userId = Context.UserIdentifier!;
         var at = (await _accessTokenService.GetCurrentAccessTokenAsync(Context.ConnectionAborted))!;
 
-        var userConversations = await _conversationsService.GetUserConversations(callerId, at, Context.ConnectionAborted);
+        _userConnectionsStore.AddConnection(userId, Context.ConnectionId);
+
+        var userConversations = await _conversationsService.GetUserConversations(userId, at, Context.ConnectionAborted);
         var addUserToGroupTasks = new List<Task>(userConversations.Count);
         foreach (var conv in userConversations)
         {
             addUserToGroupTasks.Add(Groups.AddToGroupAsync(Context.ConnectionId, conv.Id, Context.ConnectionAborted));
-            Context.StoreConversation(conv.Id);
+            _userConversationsStore.AddConversation(userId, conv.Id);
         }
 
         await Task.WhenAll(addUserToGroupTasks);
     }
 
-    public async Task SendMessageAsync(SendMessageDto dto)
+    public override async Task OnDisconnectedAsync(Exception? exception)
     {
-        if (string.IsNullOrEmpty(dto.Content) || !Context.HasConversation(dto.ConversationId))
+        _userConnectionsStore.RemoveConnection(Context.UserIdentifier, Context.ConnectionId);
+    }
+
+    public async Task SendMessageAsync(SendMessageDto? dto)
+    {
+        var userId = Context.UserIdentifier!;
+        if (string.IsNullOrEmpty(dto.Content) || !_userConversationsStore.Exists(userId, dto.ConversationId))
             return;
 
-        var callerId = Context.UserIdentifier!;
-        var receiveMessageDto = new ReceiveMessageDto(dto.Content, callerId, dto.ConversationId, DateTime.UtcNow);
-
+        var receiveMessageDto = new ReceiveMessageDto(dto.Content, userId, dto.ConversationId, DateTime.UtcNow);
         await Clients.Groups(dto.ConversationId).SendAsync(CommunicationHubMethods.ReceiveMessageAsync,
             receiveMessageDto,
             cancellationToken: Context.ConnectionAborted);

@@ -1,2 +1,21 @@
-<div id="container">
+<div id="container" #scrollable (scroll)="onScroll()">
+    <div id="messages-list" *ngIf="currentUserId != null">
+        @for(msg of messages; let idx = $index; track msg.sentAt){
+        <div class="message {{msg.senderId == currentUserId ? 'right' : 'left'}}">
+            <div class="message-header">
+                <img src="{{sendersProfiles.get(msg.senderId)!.avatarUrl}}" class="avatar" />
+                <div class="header-name">
+                    {{sendersProfiles.get(msg.senderId)!.nickname}}
+                </div>
+                <div class="header-date">
+                    {{msg.sentAt.toLocaleString()}}
+                </div>
+            </div>
+            <div class="message-content">
+                {{msg.content}}
+            </div>
+            <ng-container *ngIf="idx==messages.length-1">{{onMessageViewReady()}}</ng-container>
+        </div>
+        }
+    </div>
 </div>

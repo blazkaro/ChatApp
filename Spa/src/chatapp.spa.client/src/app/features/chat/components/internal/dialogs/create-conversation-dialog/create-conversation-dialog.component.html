@@ -1,0 +1,17 @@
+<h2 mat-dialog-title>New Chat</h2>
+<mat-dialog-content>
+    <form #form="ngForm">
+        <mat-form-field>
+            <mat-label>Name</mat-label>
+            <input matInput [(ngModel)]="conv.name" name="name" required />
+        </mat-form-field><br />
+        <mat-form-field>
+            <mat-label>Avatar URL</mat-label>
+            <input matInput type="url" [(ngModel)]="conv.avatarUrl" name="avatarUrl" />
+        </mat-form-field>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button mat-dialog-close [mat-dialog-close]="undefined">Cancel</button>
+    <button mat-button mat-dialog-close [mat-dialog-close]="conv" [disabled]="!form.valid">Confirm</button>
+</mat-dialog-actions>

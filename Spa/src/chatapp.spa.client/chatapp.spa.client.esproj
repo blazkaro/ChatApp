@@ -9,6 +9,5 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="src\app\core\services\" />
-    <Folder Include="src\app\features\chat\services\" />
   </ItemGroup>
 </Project>

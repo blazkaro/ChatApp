@@ -35,8 +35,8 @@ public class MessagesController : ControllerBase
             return Forbid();
 
         return Ok(
-            (await _messageRepository.GetLastMessagesUpToDateAsync(conversationId, dto.UpTo, cancellationToken))
-                .Select(msg => new GetMessageResDto(msg.Id, msg.Content, msg.SenderId, msg.SentAt))
+            (await _messageRepository.GetMessages(conversationId, dto.page, cancellationToken))
+                .Select(msg => new GetMessageResDto(msg.Content, msg.SenderId, msg.SentAt))
             );
     }
 }

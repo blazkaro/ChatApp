@@ -1,12 +1,12 @@
-<div id="container">
+<div id="container" (keydown.enter)="sendMessage(msgText);">
     <div id="msg-input-container">
         <mat-form-field floatLabel="auto" appearance="fill" subscriptSizing="dynamic">
-            <textarea matInput placeholder="Aa" cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="10"></textarea>
+            <textarea matInput placeholder="Aa" cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="10" #msgText autofocus></textarea>
         </mat-form-field>
     </div>
 
     <div id="send-btn-container">
-        <button mat-mini-fab aria-label="Example icon button with a menu icon">
+        <button mat-mini-fab (click)="sendMessage(msgText);">
             <mat-icon>send</mat-icon>
         </button>
     </div>

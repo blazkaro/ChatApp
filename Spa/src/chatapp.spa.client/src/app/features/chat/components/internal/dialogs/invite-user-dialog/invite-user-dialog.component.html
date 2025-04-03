@@ -1,0 +1,25 @@
+<h2 mat-dialog-title>Invite user</h2>
+<mat-dialog-content>
+    <mat-form-field>
+        <mat-label>Nickname</mat-label>
+        <div class="option">
+            <img *ngIf="selectedUser != undefined" src="{{selectedUser.avatarUrl}}" class="option-avatar" />
+            <input type="text" placeholder="Search" matInput [matAutocomplete]="auto" #namePrefix
+                   (input)="filterUsers(namePrefix.value); selectUser(undefined);">
+        </div>
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayOption" (optionSelected)="selectUser($event.option.value)">
+            @for (user of filteredUsers; track user.id) {
+            <mat-option [value]="user">
+                <div class="option">
+                    <img src="{{user.avatarUrl}}" class="option-avatar" />
+                    <span class="option-nickname">{{user.nickname}}</span>
+                </div>
+            </mat-option>
+            }
+        </mat-autocomplete>
+    </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button mat-dialog-close [mat-dialog-close]="undefined">Cancel</button>
+    <button mat-button mat-dialog-close [mat-dialog-close]="selectedUser">Invite</button>
+</mat-dialog-actions>

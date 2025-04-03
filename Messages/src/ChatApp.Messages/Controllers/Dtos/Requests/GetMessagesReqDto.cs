@@ -1,5 +1,7 @@
-﻿namespace ChatApp.Messages.Controllers.Dtos.Requests;
+﻿using System.ComponentModel.DataAnnotations;
 
-public record GetMessagesReqDto(DateTime? UpTo)
+namespace ChatApp.Messages.Controllers.Dtos.Requests;
+
+public record GetMessagesReqDto([Range(1, int.MaxValue)] int? page)
 {
 }

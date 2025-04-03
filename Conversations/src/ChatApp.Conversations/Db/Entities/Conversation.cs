@@ -4,5 +4,6 @@ public class Conversation
 {
     public Guid Id { get; set; }
     public string Name { get; set; }
+    public Uri? AvatarUrl { get; set; }
     public ICollection<ConversationMember> Members { get; set; }
 }

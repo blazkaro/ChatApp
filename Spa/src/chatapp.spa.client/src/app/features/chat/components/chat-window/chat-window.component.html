@@ -1,8 +1,8 @@
 <div id="container">
     <ng-container *ngIf="activeConv != undefined; else welcomeTemplate">
         <app-conversation-header [conv]=activeConv id="header"></app-conversation-header>
-        <app-conversation-messages id="messages"></app-conversation-messages>
-        <app-chat-bar id="bar"></app-chat-bar>
+        <app-conversation-messages [conv]=activeConv id="messages"></app-conversation-messages>
+        <app-chat-bar [conv]=activeConv id="bar"></app-chat-bar>
     </ng-container>
 </div>
 

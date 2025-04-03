@@ -2,6 +2,6 @@
 
 namespace ChatApp.Conversations.Controllers.Dtos.Requests;
 
-public record CreateConversationDto([Required(AllowEmptyStrings = false)] string Name)
+public record CreateConversationDto([Required(AllowEmptyStrings = false)] string Name, Uri? AvatarUrl)
 {
 }

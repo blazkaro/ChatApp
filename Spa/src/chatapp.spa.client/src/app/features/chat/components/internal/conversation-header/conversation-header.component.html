@@ -1,7 +1,14 @@
-<mat-card appearance="outlined">
-    <mat-card-header>
-        <mat-card-title>{{conv != undefined ? conv.name : ''}}</mat-card-title>
-        <mat-card-subtitle>What's up?</mat-card-subtitle>
-        <img mat-card-avatar id="avatar" src="{{conv!=undefined? conv.avatarUrl : ''}}" />
-    </mat-card-header>
-</mat-card>
+<div id="container">
+    <div id="actions">
+        <button *ngIf="conv.isAdmin" mat-mini-fab (click)="openInviteUserDialog()">
+            <mat-icon>person_add</mat-icon>
+        </button>
+    </div>
+    <mat-card appearance="outlined">
+        <mat-card-header>
+            <mat-card-title>{{conv != undefined ? conv.name : ''}}</mat-card-title>
+            <mat-card-subtitle>What's up?</mat-card-subtitle>
+            <img mat-card-avatar id="avatar" src="{{conv!=undefined? conv.avatarUrl : ''}}" />
+        </mat-card-header>
+    </mat-card>
+</div>

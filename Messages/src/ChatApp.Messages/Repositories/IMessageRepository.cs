@@ -6,6 +6,6 @@ namespace ChatApp.Messages.Repositories;
 
 public interface IMessageRepository
 {
-    Task<IEnumerable<Message>> GetLastMessagesUpToDateAsync(Guid conversationId, DateTime? upTo, CancellationToken cancellationToken = default);
+    Task<IEnumerable<Message>> GetMessages(Guid conversationId, int? pageIndex, CancellationToken cancellationToken = default);
     Task SaveAndDequeueMessagesAsync(ConcurrentQueue<MessageDtoRedis> messages);
 }

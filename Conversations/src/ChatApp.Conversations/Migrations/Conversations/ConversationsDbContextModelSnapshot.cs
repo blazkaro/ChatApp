@@ -28,6 +28,9 @@ namespace ChatApp.Conversations.Migrations.Conversations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<string>("AvatarUrl")
+                        .HasColumnType("text");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
@@ -39,20 +42,13 @@ namespace ChatApp.Conversations.Migrations.Conversations
 
             modelBuilder.Entity("ChatApp.Conversations.Db.Entities.ConversationInvitation", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
                     b.Property<Guid>("ConversationId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("InvitedUserId")
-                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("ConversationId");
+                    b.HasKey("ConversationId", "InvitedUserId");
 
                     b.HasIndex("InvitedUserId");
 

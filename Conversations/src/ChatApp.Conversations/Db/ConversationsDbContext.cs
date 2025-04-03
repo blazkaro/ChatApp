@@ -25,12 +25,9 @@ public class ConversationsDbContext : DbContext
             .HasKey(p => new { p.UserId, p.ConversationId });
 
         modelBuilder.Entity<ConversationInvitation>()
-            .HasKey(p => p.Id);
+            .HasKey(p => new { p.ConversationId, p.InvitedUserId });
 
         modelBuilder.Entity<ConversationInvitation>()
             .HasIndex(p => p.InvitedUserId);
-
-        modelBuilder.Entity<ConversationInvitation>()
-            .HasIndex(p => p.ConversationId);
     }
 }

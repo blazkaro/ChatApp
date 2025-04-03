@@ -1,41 +1,48 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable } from 'rxjs';
+import { RealTimeCommunicationService } from '../../../core/services/real-time-communication.service';
 import { Conversation } from '../models/conversation';
+import { ConversationMember } from '../models/conversation-member';
+import { ConversationService } from './conversation.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChatStateService {
 
-  constructor() { }
+  conversations: Map<string, Conversation> = new Map();
+  private activeConvIdSubject: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
+  private activeConvMembers: Map<string, ConversationMember> = new Map();
 
-  private activeIdSubject: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
-
-  public conversations: Map<string, Conversation> = new Map();
-
-  loadConversations() {
-    this.conversations.set("0",
-      {
-        id: "0",
-        name: "Some Even More Weird User Name. WTF cats everywhere",
-        avatarUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Cat_November_2010-1a.jpg/640px-Cat_November_2010-1a.jpg"
-      });
-
-    this.conversations.set("1",
-      {
-        id: "1",
-        name: "Some Even More Weird User Name",
-        avatarUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Cat_November_2010-1a.jpg/640px-Cat_November_2010-1a.jpg"
-      });
+  constructor(private readonly conversationService: ConversationService,
+    private readonly rtcService: RealTimeCommunicationService) {
+    this.Init();
   }
 
-  setActiveConversation(id: string) {
-    if (this.conversations.has(id))
-      this.activeIdSubject.next(id);
+  Init(): void {
+    this.rtcService.onCall('OnConversationJoin', async (convId: string, userId: string) => {
+      if (convId == this.activeConvIdSubject.value) {
+        // TODO: should update members
+        // reloads all members, done just for simplicity
+        this.activeConvMembers = new Map((await this.conversationService.getMembers(convId)).map(member => [member.id, member]));
+      }
+    });
+  }
+
+  async loadConversations(): Promise<void> {
+    let convs = await this.conversationService.getConversations();
+    this.conversations = new Map(convs.map(val => [val.id, val]));
+  }
+
+  async setActiveConversation(id: string): Promise<void> {
+    if (this.conversations.has(id) && id !== this.activeConvIdSubject.value) {
+      this.activeConvMembers = new Map((await this.conversationService.getMembers(id)).map(member => [member.id, member]));
+      this.activeConvIdSubject.next(id);
+    }
   }
 
   getActiveConversation(): Observable<Conversation | undefined> {
-    return this.activeIdSubject.asObservable().pipe(
+    return this.activeConvIdSubject.pipe(
       map((id) => {
         if (id == null)
           return undefined;
@@ -43,5 +50,12 @@ export class ChatStateService {
         return this.conversations.get(id);
       })
     );
+  }
+
+  getMember(id: string): ConversationMember {
+    if (!this.activeConvMembers.has(id))
+      throw new Error("The member id not found");
+
+    return this.activeConvMembers.get(id)!;
   }
 }

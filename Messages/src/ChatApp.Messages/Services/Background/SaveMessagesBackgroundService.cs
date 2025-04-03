@@ -71,7 +71,10 @@ public class SaveMessagesBackgroundService : BackgroundService
 
     private async Task SubscribeToMessagesChannel()
     {
-        await _redisSub.SubscribeAsync(new("*ChatApp.RealTimeCommunication:group:*", RedisChannel.PatternMode.Pattern), HandleMessage);
+        // TODO
+        // will duplicate messages on multiple instances, the channel prefix should be included
+        // leave it here for now for simplicity
+        await _redisSub.SubscribeAsync(RedisChannel.Pattern("*RealTimeCommunication.CommunicationHub:group:*"), HandleMessage);
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)

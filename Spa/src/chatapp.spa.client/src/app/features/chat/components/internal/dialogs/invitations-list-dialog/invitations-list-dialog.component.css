@@ -1,0 +1,26 @@
+.invitation {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  position:relative;
+  padding: 5px;
+  box-sizing:border-box;
+}
+
+.conv-name {
+  font-weight: 700;
+  font-size: 1.2em;
+  color: white;
+}
+
+.conv-avatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+}
+
+.actions{
+    position:absolute;
+    right:0;
+}

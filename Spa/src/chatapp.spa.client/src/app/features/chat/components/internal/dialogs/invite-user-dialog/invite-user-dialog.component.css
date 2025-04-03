@@ -1,0 +1,10 @@
+.option {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.option-avatar {
+  height: 20px;
+  width: 20px;
+}

@@ -29,7 +29,7 @@ export class RealTimeCommunicationService implements OnDestroy {
   }
 
   callMethod(methodName: string, ...args: any[]): Promise<void> {
-    return this.hubConnection.send(methodName, args);
+    return this.hubConnection.send(methodName, ...args);
   }
 
   onCall(methodName: string, handler: (...args: any[]) => any): void {

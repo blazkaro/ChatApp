@@ -8,6 +8,8 @@ const PROXY_CONFIG = [
       "/api",
     ],
     target,
+    ws: true,
+    changeOrigin: true,
     secure: false
   }
 ]

@@ -18,15 +18,22 @@ public class MessageRepository : IMessageRepository
         _dataSource = dataSource;
     }
 
-    public async Task<IEnumerable<Message>> GetLastMessagesUpToDateAsync(Guid conversationId, DateTime? upTo,
+    public async Task<IEnumerable<Message>> GetMessages(Guid conversationId, int? pageIndex,
         CancellationToken cancellationToken = default)
     {
         await using var conn = await _dataSource.OpenConnectionAsync(cancellationToken);
 
-        var queryParams = new { conversationId, upTo = upTo ?? DateTime.UtcNow.AddMinutes(10), messagesLimit = MESSAGES_LIMIT };
-        var cmd = new CommandDefinition(@"SELECT Content, SenderId, ConversationId, SentAt FROM Messages
-                                        WHERE ConversationId = @conversationId AND SentAt <= @upTo
+        var queryParams = new
+        {
+            conversationId,
+            offset = pageIndex.HasValue ? (pageIndex - 1) * MESSAGES_LIMIT : 0,
+            messagesLimit = MESSAGES_LIMIT
+        };
+
+        var cmd = new CommandDefinition(@"SELECT Id, Content, SenderId, ConversationId, SentAt FROM Messages
+                                        WHERE ConversationId = @conversationId
                                         ORDER BY SentAt DESC
+                                        OFFSET @offset
                                         LIMIT @messagesLimit", queryParams, cancellationToken: cancellationToken);
 
         return await conn.QueryAsync<Message>(cmd);
@@ -36,7 +43,7 @@ public class MessageRepository : IMessageRepository
     {
         await using var conn = await _dataSource.OpenConnectionAsync();
         await using var writer = await conn.BeginBinaryImportAsync(
-            "COPY Messages (Content, SenderId, ConversationId, SentAt) FROM STDIN (FORMAT BINARY)"
+            "COPY Messages (Id, Content, SenderId, ConversationId, SentAt) FROM STDIN (FORMAT BINARY)"
             );
 
         int curCount = messages.Count;
@@ -46,6 +53,7 @@ public class MessageRepository : IMessageRepository
             {
                 await writer.StartRowAsync();
 
+                await writer.WriteAsync(Guid.NewGuid(), NpgsqlDbType.Uuid);
                 await writer.WriteAsync(msg.Content, NpgsqlDbType.Varchar);
                 await writer.WriteAsync(msg.SenderId, NpgsqlDbType.Varchar);
                 await writer.WriteAsync(msg.ConversationId, NpgsqlDbType.Uuid);

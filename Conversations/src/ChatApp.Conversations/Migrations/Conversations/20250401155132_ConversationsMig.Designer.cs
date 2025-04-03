@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ChatApp.Conversations.Migrations.Conversations
 {
     [DbContext(typeof(ConversationsDbContext))]
-    [Migration("20250316134522_ConversationsMigration")]
-    partial class ConversationsMigration
+    [Migration("20250401155132_ConversationsMig")]
+    partial class ConversationsMig
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,6 +31,9 @@ namespace ChatApp.Conversations.Migrations.Conversations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<string>("AvatarUrl")
+                        .HasColumnType("text");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
@@ -42,20 +45,13 @@ namespace ChatApp.Conversations.Migrations.Conversations
 
             modelBuilder.Entity("ChatApp.Conversations.Db.Entities.ConversationInvitation", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
                     b.Property<Guid>("ConversationId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("InvitedUserId")
-                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("ConversationId");
+                    b.HasKey("ConversationId", "InvitedUserId");
 
                     b.HasIndex("InvitedUserId");
 

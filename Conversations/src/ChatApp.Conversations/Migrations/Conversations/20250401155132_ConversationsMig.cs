@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ChatApp.Conversations.Migrations.Conversations
 {
     /// <inheritdoc />
-    public partial class ConversationsMigration : Migration
+    public partial class ConversationsMig : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -16,7 +16,8 @@ namespace ChatApp.Conversations.Migrations.Conversations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: false)
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    AvatarUrl = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -27,13 +28,12 @@ namespace ChatApp.Conversations.Migrations.Conversations
                 name: "ConversationInvitations",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
                     ConversationId = table.Column<Guid>(type: "uuid", nullable: false),
                     InvitedUserId = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ConversationInvitations", x => x.Id);
+                    table.PrimaryKey("PK_ConversationInvitations", x => new { x.ConversationId, x.InvitedUserId });
                     table.ForeignKey(
                         name: "FK_ConversationInvitations_Conversations_ConversationId",
                         column: x => x.ConversationId,
@@ -60,11 +60,6 @@ namespace ChatApp.Conversations.Migrations.Conversations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ConversationInvitations_ConversationId",
-                table: "ConversationInvitations",
-                column: "ConversationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ConversationInvitations_InvitedUserId",

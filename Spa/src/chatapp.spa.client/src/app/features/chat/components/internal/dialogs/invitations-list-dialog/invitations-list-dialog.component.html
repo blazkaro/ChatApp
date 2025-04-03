@@ -1,0 +1,14 @@
+<h2 mat-dialog-title>Awaiting invitations ({{invitations.length}})</h2>
+<mat-dialog-content>
+    @for(inv of invitations; track inv.conversationId){
+    <div class="invitation">
+        <img src="{{inv.avatarUrl}}" class="conv-avatar" />
+        <span class="conv-name">{{inv.name}}</span>
+        <div class="actions">
+            <button mat-mini-fab class="accept-btn" (click)="acceptInvitation(inv)">
+                <mat-icon>check</mat-icon>
+            </button>
+        </div>
+    </div>
+    }
+</mat-dialog-content>

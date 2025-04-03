@@ -1,5 +1,5 @@
 ﻿namespace ChatApp.Conversations.Controllers.Dtos.Responses;
 
-public record GetConversationInvitationDto(Guid ConversationId, Guid InvitationId)
+public record GetConversationInvitationDto(Guid ConversationId, string? Name, Uri? AvatarUrl)
 {
 }

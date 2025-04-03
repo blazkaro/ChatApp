@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Conversation } from '../../models/conversation';
 import { ChatStateService } from '../../services/chat-state.service';
 
@@ -8,12 +8,14 @@ import { ChatStateService } from '../../services/chat-state.service';
   templateUrl: './chat-window.component.html',
   styleUrl: './chat-window.component.css'
 })
-export class ChatWindowComponent {
+export class ChatWindowComponent implements OnInit {
 
   activeConv: Conversation | undefined;
 
-  constructor(private readonly chatState: ChatStateService) {
-    chatState.getActiveConversation().subscribe((conv) => {
+  constructor(private readonly chatState: ChatStateService) { }
+
+  ngOnInit(): void {
+    this.chatState.getActiveConversation().subscribe((conv) => {
       this.activeConv = conv;
     });
   }

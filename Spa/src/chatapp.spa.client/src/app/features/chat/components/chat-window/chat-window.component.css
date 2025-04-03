@@ -4,8 +4,9 @@
   display: flex;
   flex-direction: column;
   border-radius: 12px;
+  box-sizing:border-box;
+  min-height: min-content;
 }
-
 
 #header {
   display: block;
@@ -16,6 +17,8 @@
 #messages {
   display: block;
   flex: 1 1;
+  overflow: auto;
+  box-sizing: border-box;
 }
 
 #bar {
@@ -33,6 +36,6 @@
   align-items: center;
 }
 
-#welcome-layout-logo{
-    width: 70%;
+#welcome-layout-logo {
+  width: 70%;
 }
